@@ -52,5 +52,9 @@ class AdminsController extends Controller
         return response()->json($user->id);
     }
 
+    public function createStop(Request $request) {
+
+    }
+
 
 }

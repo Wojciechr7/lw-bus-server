@@ -41,6 +41,12 @@ Route::group(['prefix' => 'users', 'middleware' => ['ability:admin,manage-users'
     Route::post('/create', 'AdminsController@createUser');
 });
 
+Route::group(['prefix' => 'stops', 'middleware' => ['ability:admin,manage-users']], function()
+{
+    Route::post('', 'AdminsController@createStop');
+
+});
+
 
 
 // Authentication route
