@@ -44,7 +44,16 @@ Route::group(['prefix' => 'users', 'middleware' => ['ability:admin,manage-users'
 Route::group(['prefix' => 'stops', 'middleware' => ['ability:admin,manage-users']], function()
 {
     Route::post('', 'AdminsController@createStop');
+    Route::get('', 'AdminsController@getStops');
+    Route::delete('/{id}', 'AdminsController@removeStop');
+});
 
+Route::group(['prefix' => 'routes', 'middleware' => ['ability:admin,manage-users']], function()
+{
+    Route::post('', 'AdminsController@createRoute');
+    Route::get('', 'AdminsController@getRoutes');
+    Route::get('/{id}', 'AdminsController@getRoute');
+    Route::put('/{id}', 'AdminsController@editRoute');
 });
 
 

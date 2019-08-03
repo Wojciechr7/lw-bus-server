@@ -1,0 +1,15 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Route extends Model
+{
+    protected $fillable = ['from', 'to', 'smth'];
+
+    public function stop()
+    {
+        return $this->belongsToMany('App\Stop', 'route_stop');
+    }
+}
