@@ -12,4 +12,9 @@ class Stop extends Model
     {
         return $this->belongsToMany('App\Route', 'route_stop');
     }
+
+    public function departure()
+    {
+        return $this->hasMany('App\Departure');
+    }
 }

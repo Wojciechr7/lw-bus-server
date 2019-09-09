@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\Permission;
 use App\Role;
 use App\User;
@@ -33,7 +34,7 @@ class JwtAuthenticateController extends Controller
 
         $token = NULL;
 
-        $user = \App\User::where('login', '=', $request->input('login'))->first();
+        $user = \App\User::with('roles')->get()->where('login', '=', $request->input('login'))->first();
 
         try {
             if ($user && password_verify($request->input('pass'), $user->password)) {
@@ -45,10 +46,10 @@ class JwtAuthenticateController extends Controller
             // something went wrong
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-
-
+        $user->company = Company::findOrFail($user->company_id);
+        $user->token = $token;
         // if no errors are encountered we can return a JWT
-        return response()->json(compact('token'));
+        return response()->json($user);
     }
 
     public function createRole(Request $request){

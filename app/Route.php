@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Route extends Model
 {
-    protected $fillable = ['from', 'to', 'smth'];
+    protected $fillable = ['from', 'to', 'order'];
 
     public function stop()
     {

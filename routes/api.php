@@ -39,6 +39,8 @@ Route::group(['prefix' => 'users', 'middleware' => ['ability:admin,manage-users'
     Route::get('/get/{id}', 'AdminsController@getUser');
     Route::put('/edit/{id}', 'AdminsController@editUser');
     Route::post('/create', 'AdminsController@createUser');
+    Route::post('/changePassword/{id}', 'AdminsController@changeUserPassword');
+    Route::delete('/delete/{id}', 'AdminsController@deleteUser');
 });
 
 Route::group(['prefix' => 'stops', 'middleware' => ['ability:admin,manage-users']], function()
@@ -54,6 +56,33 @@ Route::group(['prefix' => 'routes', 'middleware' => ['ability:admin,manage-users
     Route::get('', 'AdminsController@getRoutes');
     Route::get('/{id}', 'AdminsController@getRoute');
     Route::put('/{id}', 'AdminsController@editRoute');
+    Route::delete('/{id}', 'AdminsController@deleteRoute');
+});
+
+Route::group(['prefix' => 'routesUser', 'middleware' => ['ability:user,manage-routes']], function()
+{
+    Route::get('', 'AdminsController@getRoutes');
+    Route::get('/{id}', 'AdminsController@getRoute');
+});
+
+Route::group(['prefix' => 'stopsUser', 'middleware' => ['ability:user,manage-routes']], function()
+{
+    Route::get('', 'AdminsController@getStops');
+});
+
+Route::group(['prefix' => 'passagesUser', 'middleware' => ['ability:user,manage-routes']], function()
+{
+    Route::post('', 'AdminsController@createPassage');
+    Route::get('/{company_id}', 'AdminsController@getPassages');
+    Route::get('/show/{id}', 'AdminsController@getPassage');
+    Route::put('/{id}', 'AdminsController@editPassage');
+    Route::delete('/{id}', 'AdminsController@deletePassage');
+});
+
+Route::group(['prefix' => 'publicApi'], function()
+{
+    Route::get('/passages/{from}/{to}/{time}/{date}/{year}', 'PassagesController@getPassages');
+    Route::get('/stops', 'AdminsController@getStops');
 });
 
 
