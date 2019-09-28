@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFreeDayPassageTable extends Migration
+class CreateDayPassageTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateFreeDayPassageTable extends Migration
      */
     public function up()
     {
-        Schema::create('free_day_passage', function (Blueprint $table) {
-            $table->integer('free_day_id')->unsigned()->nullable();
-            $table->foreign('free_day_id')->references('id')
-                ->on('free_days')->onDelete('cascade');
-
-            $table->integer('passage_id')->unsigned()->nullable();
+        Schema::create('day_passage', function (Blueprint $table) {
+            $table->integer('day_id')->unsigned();
+            $table->foreign('day_id')->references('id')
+                ->on('days')->onDelete('cascade');
+            $table->integer('passage_id')->unsigned();
             $table->foreign('passage_id')->references('id')
                 ->on('passages')->onDelete('cascade');
             $table->timestamps();
@@ -32,6 +31,6 @@ class CreateFreeDayPassageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('free_day_passage');
+        Schema::dropIfExists('day_passage');
     }
 }

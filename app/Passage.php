@@ -6,25 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Passage extends Model
 {
-    protected $fillable = ['price', 'company_id', 'from', 'to'];
+    protected $fillable = ['price', 'from', 'to'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function company()
     {
-        return $this->belongsToMany('App\Company', 'company_passage');
+        return $this->belongsTo(Company::class);
     }
 
-    public function departure()
+    public function days()
     {
-        return $this->hasMany('App\Departure');
+        return $this->belongsToMany(Day::class, 'day_passage');
     }
 
-    public function freeDay()
+    public function free_days()
     {
-        return $this->belongsToMany('App\FreeDay', 'free_day_passage');
+        return $this->hasMany(FreeDay::class);
     }
 
-    public function day()
+    public function departures()
     {
-        return $this->belongsToMany('App\Day', 'day_passage');
+        return $this->hasMany(Departure::class)->orderBy('index', 'asc');
     }
 }

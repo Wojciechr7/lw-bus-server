@@ -3,6 +3,7 @@
 use App\Role;
 use App\User;
 use App\Permission;
+use App\Day;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -20,12 +21,12 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
-            UsersSeeder::class,
+            /*UsersSeeder::class,*/
             RolesSeeder::class,
-            RoleUserSeeder::class,
+            /*RoleUserSeeder::class,*/
             PermissionsSeeder::class,
             PermissionRoleSeeder::class,
-            StopsSeeder::class,
+            DaysSeeder::class
         ]);
 
     }

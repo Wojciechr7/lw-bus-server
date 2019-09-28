@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
+use App\Http\Requests;
 use App\Permission;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Log;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class JwtAuthenticateController extends Controller
@@ -22,11 +19,6 @@ class JwtAuthenticateController extends Controller
     {
         return response()->json(['auth'=>Auth::user(), 'users'=>User::all()]);
     }
-
-    public function test() {
-        return [1, 2, 3];
-    }
-
 
     public function authenticate(Request $request)
     {
@@ -46,7 +38,6 @@ class JwtAuthenticateController extends Controller
             // something went wrong
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-        $user->company = Company::findOrFail($user->company_id);
         $user->token = $token;
         // if no errors are encountered we can return a JWT
         return response()->json($user);

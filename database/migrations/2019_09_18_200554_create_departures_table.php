@@ -15,11 +15,14 @@ class CreateDeparturesTable extends Migration
     {
         Schema::create('departures', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('index');
             $table->string('name');
-            $table->dateTime('time');
-            $table->unsignedInteger('passage_id');
-
-            $table->foreign('passage_id')->references('id')->on('passages');
+            $table->integer('hours');
+            $table->integer('minutes');
+            $table->integer('passage_id')->unsigned();
+            $table->foreign('passage_id')->references('id')->on('passages')->onDelete('cascade');
+            $table->integer('stop_id')->unsigned();
+            $table->foreign('stop_id')->references('id')->on('stops')->onDelete('cascade');
             $table->timestamps();
         });
     }

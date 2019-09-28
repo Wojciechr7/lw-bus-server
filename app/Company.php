@@ -8,18 +8,14 @@ class Company extends Model
 {
     protected $fillable = ['name'];
 
-    public function departure()
-    {
-        return $this->hasOne('App\Passage');
-    }
-
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
     }
 
-    public function passage()
+    public function passages()
     {
-        return $this->belongsToMany('App\Passage', 'company_passage');
+        return $this->hasMany(Passage::class);
     }
+
 }

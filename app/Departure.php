@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Departure extends Model
 {
-    protected $fillable = ['index', 'name', 'time', 'stop_id'];
+    protected $fillable = ['index', 'name', 'hours', 'minutes'];
 
     public function passage()
     {
-        return $this->belongsTo('App\Passage');
+        return $this->belongsTo(Passage::class);
     }
 
     public function stop()
     {
-        return $this->belongsTo('App\Stop');
+        return $this->belongsTo(Stop::class);
     }
 }

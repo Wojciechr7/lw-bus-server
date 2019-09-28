@@ -16,9 +16,12 @@ class CreatePassagesTable extends Migration
         Schema::create('passages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('price')->nullable();
-            $table->unsignedInteger('company_id')->nullable();
-
-            $table->foreign('company_id')->references('id')->on('companies');
+            $table->string('from');
+            $table->string('to');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('company_id')->unsigned();
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->timestamps();
         });
     }

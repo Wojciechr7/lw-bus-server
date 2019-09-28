@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterTablePassages extends Migration
+class CreateTemplatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class AlterTablePassages extends Migration
      */
     public function up()
     {
-        Schema::table('passages', function ($table) {
-            $table->unsignedInteger('stop_id')->nullable();
-            $table->foreign('stop_id')->references('id')->on('stops');
+        Schema::create('templates', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('from');
+            $table->string('to');
+            /*$table->string('order')->nullable();*/
+            $table->timestamps();
         });
     }
 
@@ -26,8 +29,6 @@ class AlterTablePassages extends Migration
      */
     public function down()
     {
-        Schema::table('passages', function ($table) {
-            $table->dropColumn('stop_id');
-        });
+        Schema::dropIfExists('templates');
     }
 }

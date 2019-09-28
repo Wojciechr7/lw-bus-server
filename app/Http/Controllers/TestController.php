@@ -26,6 +26,11 @@ class TestController extends Controller
         //
     }
 
+    public function createTestPassage(Request $request)
+    {
+        return 1;
+    }
+
     /**
      * Store a newly created resource in storage.
      *

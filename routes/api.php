@@ -26,13 +26,6 @@ Route::post('assign-role', 'JwtAuthenticateController@assignRole');
 // Route to attache permission to a role
 Route::post('attach-permission', 'JwtAuthenticateController@attachPermission');
 
-
-// API route group that we need to protect
-/*Route::group(['middleware' => ['ability:admin,create-users']], function()
-{
-    Route::get('users', 'JwtAuthenticateController@index');
-});*/
-
 Route::group(['prefix' => 'users', 'middleware' => ['ability:admin,manage-users']], function()
 {
     Route::get('/get', 'AdminsController@getUsers');
@@ -45,47 +38,50 @@ Route::group(['prefix' => 'users', 'middleware' => ['ability:admin,manage-users'
 
 Route::group(['prefix' => 'stops', 'middleware' => ['ability:admin,manage-users']], function()
 {
-    Route::post('', 'AdminsController@createStop');
-    Route::get('', 'AdminsController@getStops');
-    Route::delete('/{id}', 'AdminsController@removeStop');
+    Route::post('', 'StopsController@createStop');
+    Route::get('', 'StopsController@getStops');
+    Route::delete('/{id}', 'StopsController@removeStop');
 });
 
 Route::group(['prefix' => 'routes', 'middleware' => ['ability:admin,manage-users']], function()
 {
-    Route::post('', 'AdminsController@createRoute');
-    Route::get('', 'AdminsController@getRoutes');
-    Route::get('/{id}', 'AdminsController@getRoute');
-    Route::put('/{id}', 'AdminsController@editRoute');
-    Route::delete('/{id}', 'AdminsController@deleteRoute');
+    Route::post('', 'TemplatesController@createTemplate');
+    Route::get('', 'TemplatesController@getTemplates');
+    Route::get('/{id}', 'TemplatesController@getTemplate');
+    Route::put('/{id}', 'TemplatesController@editTemplate');
+    Route::delete('/{id}', 'TemplatesController@deleteTemplate');
 });
 
-Route::group(['prefix' => 'routesUser', 'middleware' => ['ability:user,manage-routes']], function()
+Route::group(['prefix' => 'templatesUser', 'middleware' => ['ability:user,manage-routes']], function()
 {
-    Route::get('', 'AdminsController@getRoutes');
-    Route::get('/{id}', 'AdminsController@getRoute');
+    Route::get('', 'TemplatesController@getTemplates');
+    Route::get('/{id}', 'TemplatesController@getTemplate');
 });
 
 Route::group(['prefix' => 'stopsUser', 'middleware' => ['ability:user,manage-routes']], function()
 {
-    Route::get('', 'AdminsController@getStops');
+    Route::get('', 'StopsController@getStops');
 });
 
 Route::group(['prefix' => 'passagesUser', 'middleware' => ['ability:user,manage-routes']], function()
 {
-    Route::post('', 'AdminsController@createPassage');
-    Route::get('/{company_id}', 'AdminsController@getPassages');
-    Route::get('/show/{id}', 'AdminsController@getPassage');
-    Route::put('/{id}', 'AdminsController@editPassage');
-    Route::delete('/{id}', 'AdminsController@deletePassage');
+    Route::post('', 'PassagesController@createPassage');
+    Route::get('/{company_id}', 'PassagesController@getUserPassages');
+    Route::get('/show/{id}', 'PassagesController@getPassage');
+    Route::put('/{id}', 'PassagesController@editPassage');
+    Route::delete('/{id}', 'PassagesController@deletePassage');
 });
 
 Route::group(['prefix' => 'publicApi'], function()
 {
     Route::get('/passages/{from}/{to}/{time}/{date}/{year}', 'PassagesController@getPassages');
-    Route::get('/stops', 'AdminsController@getStops');
+    Route::get('/stops', 'StopsController@getStops');
 });
 
-
+Route::group(['prefix' => 'test'], function()
+{
+    Route::post('create', 'TestController@createTestPassage');
+});
 
 // Authentication route
 Route::post('authenticate', 'JwtAuthenticateController@authenticate');

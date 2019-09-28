@@ -8,13 +8,16 @@ class Stop extends Model
 {
     protected $fillable = ['name'];
 
-    public function route()
+    public function template()
     {
-        return $this->belongsToMany('App\Route', 'route_stop');
+        return $this
+            ->belongsToMany(Template::class, 'template_stop')
+            ->withPivot('order')
+            ->orderBy('order');
     }
 
-    public function departure()
+    public function departures()
     {
-        return $this->hasMany('App\Departure');
+        return $this->hasMany(Departure::class);
     }
 }
