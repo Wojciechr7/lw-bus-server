@@ -32,6 +32,9 @@ class PassagesController extends Controller
             ->whereHas('departures', function($query) use ($to) {
                 $query->where('stop_id', $to);
             })
+            ->whereHas('departures', function($query) use ($from) {
+                $query->where('stop_id', $from);
+            })
             ->whereHas('days', function($query) use ($dayOfWeek) {
                 $query->where('id', '=', $dayOfWeek);
             })
@@ -41,8 +44,8 @@ class PassagesController extends Controller
             })
             ->get();
         $passages = $passages->reject(function ($passage) use ($to, $from) {
-            $fromIndex = 0;
-            $toIndex = 0;
+            $fromIndex = -1;
+            $toIndex = -1;
             foreach ($passage['departures'] as $departure) {
                 if ($departure['stop_id'] == $from) {
                     $fromIndex = $departure['index'];
