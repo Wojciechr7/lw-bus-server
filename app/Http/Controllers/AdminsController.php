@@ -8,6 +8,7 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminsController extends Controller
@@ -15,6 +16,16 @@ class AdminsController extends Controller
     public function getUsers()
     {
         return response()->json(['auth' => Auth::user(), 'users' => User::all()->except(Auth::id())]);
+    }
+
+    public function getCompanies()
+    {
+        $companies = DB::table('companies')
+            ->join('passages', 'companies.id', '=', 'passages.company_id')
+            ->select('name', DB::raw('count(*) as numberPassages'))
+            ->groupBy('name')
+            ->get();
+        return $companies;
     }
 
     public function getUser($id)

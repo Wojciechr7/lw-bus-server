@@ -76,6 +76,7 @@ Route::group(['prefix' => 'publicApi'], function()
 {
     Route::get('/passages/{from}/{to}/{time}/{date}/{year}', 'PassagesController@getPassages');
     Route::get('/stops', 'StopsController@getStops');
+    Route::get('/buses', 'AdminsController@getCompanies');
 });
 
 Route::group(['prefix' => 'test'], function()
