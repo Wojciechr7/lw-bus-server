@@ -22,12 +22,8 @@ class JwtAuthenticateController extends Controller
 
     public function authenticate(Request $request)
     {
-        $credentials = $request->only('login', 'pass');
-
         $token = NULL;
-
         $user = \App\User::with('roles')->get()->where('login', '=', $request->input('login'))->first();
-
         try {
             if ($user && password_verify($request->input('pass'), $user->password)) {
                 $token = JWTAuth::fromUser($user);
@@ -35,11 +31,9 @@ class JwtAuthenticateController extends Controller
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
         } catch (JWTException $e) {
-            // something went wrong
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
         $user->token = $token;
-        // if no errors are encountered we can return a JWT
         return response()->json($user);
     }
 
